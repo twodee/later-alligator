@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import './App.css'
 
-const UNITS = ['minutes', 'hours', 'days', 'years']
+const UNITS = ['seconds', 'minutes', 'hours', 'days', 'years']
 
 function toLocalDateTimeString(date) {
   const pad = (n) => String(n).padStart(2, '0')
@@ -14,7 +14,8 @@ function toLocalDateTimeString(date) {
 function addInterval(date, quantity, unit) {
   const d = new Date(date)
   const q = Number(quantity)
-  if (unit === 'minutes') d.setMinutes(d.getMinutes() + q)
+  if (unit === 'seconds') d.setSeconds(d.getSeconds() + q)
+  else if (unit === 'minutes') d.setMinutes(d.getMinutes() + q)
   else if (unit === 'hours') d.setHours(d.getHours() + q)
   else if (unit === 'days') d.setDate(d.getDate() + q)
   else if (unit === 'years') d.setFullYear(d.getFullYear() + q)
