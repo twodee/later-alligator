@@ -183,30 +183,34 @@ input[type="datetime-local"]:focus {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  display: flex;
-  gap: 0.4rem;
+  display: inline-flex;
+  align-items: center;
   z-index: 100;
 }
 
-.lang-btn {
+.lang-select {
+  appearance: none;
   background: #fff;
-  border: 1.5px solid #b7d5c4;
-  border-radius: 6px;
-  color: #2d6a4f;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 0.3rem 0.7rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.45rem 2.2rem 0.45rem 1rem;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  outline: none;
+  transition: border-color 0.15s;
 }
 
-.lang-btn:hover {
-  background: #f0faf4;
-  border-color: #2d6a4f;
+.lang-select:hover,
+.lang-select:focus {
+  border-color: #999;
 }
 
-.lang-btn.active {
-  background: #2d6a4f;
-  border-color: #2d6a4f;
-  color: #fff;
+.lang-chevron {
+  pointer-events: none;
+  position: absolute;
+  right: 0.5rem;
+  color: #555;
+  font-size: 1.1rem;
 }

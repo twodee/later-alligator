@@ -83,18 +83,16 @@ function App() {
   return (
     <div className="app">
       <div className="lang-selector">
-        <button
-          className={`lang-btn${lang === 'en' ? ' active' : ''}`}
-          onClick={() => changeLang('en')}
+        <select
+          className="lang-select"
+          value={lang}
+          onChange={(e) => changeLang(e.target.value)}
+          aria-label="Language"
         >
-          English
-        </button>
-        <button
-          className={`lang-btn${lang === 'es' ? ' active' : ''}`}
-          onClick={() => changeLang('es')}
-        >
-          Español
-        </button>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+        </select>
+        <span className="lang-chevron material-icons">expand_more</span>
       </div>
 
       <h1>🐊 Later Alligator</h1>
