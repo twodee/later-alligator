@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react'
 import './App.css'
+import en from './locales/en'
+import es from './locales/es'
 
+const LOCALES = { en, es }
 const UNITS = ['seconds', 'minutes', 'hours', 'days', 'years']
 
 function toLocalDateTimeString(date) {
@@ -36,6 +39,18 @@ let nextId = 1
 
 function App() {
   const now = new Date()
+  const [lang, setLang] = useState(() => {
+    const stored = localStorage.getItem('lang')
+    if (stored && LOCALES[stored]) return stored
+    const browserLang = navigator.language.split('-')[0]
+    return LOCALES[browserLang] ? browserLang : 'en'
+  })
+  const t = LOCALES[lang]
+
+  const changeLang = useCallback((newLang) => {
+    localStorage.setItem('lang', newLang)
+    setLang(newLang)
+  }, [])
   const [startTime, setStartTime] = useState(toLocalDateTimeString(now))
   const [intervals, setIntervals] = useState([])
 
@@ -67,10 +82,25 @@ function App() {
 
   return (
     <div className="app">
+      <div className="lang-selector">
+        <button
+          className={`lang-btn${lang === 'en' ? ' active' : ''}`}
+          onClick={() => changeLang('en')}
+        >
+          English
+        </button>
+        <button
+          className={`lang-btn${lang === 'es' ? ' active' : ''}`}
+          onClick={() => changeLang('es')}
+        >
+          Español
+        </button>
+      </div>
+
       <h1>🐊 Later Alligator</h1>
 
       <section className="time-section">
-        <label htmlFor="start-time">Start time</label>
+        <label htmlFor="start-time">{t.startTime}</label>
         <input
           id="start-time"
           type="datetime-local"
@@ -81,9 +111,9 @@ function App() {
       </section>
 
       <section className="intervals-section">
-        <h2>Intervals</h2>
+        <h2>{t.intervals}</h2>
         {intervals.length === 0 && (
-          <p className="empty-hint">No intervals yet. Add one below.</p>
+          <p className="empty-hint">{t.noIntervals}</p>
         )}
         {intervals.map((iv, index) => (
           <div key={iv.id} className="interval-row">
@@ -91,7 +121,7 @@ function App() {
             <input
               type="number"
               min="0"
-              placeholder="Quantity"
+              placeholder={t.quantity}
               value={iv.quantity}
               onChange={(e) => updateInterval(iv.id, 'quantity', e.target.value)}
             />
@@ -101,7 +131,7 @@ function App() {
             >
               {UNITS.map((u) => (
                 <option key={u} value={u}>
-                  {u}
+                  {t.units[u]}
                 </option>
               ))}
             </select>
@@ -115,16 +145,16 @@ function App() {
           </div>
         ))}
         <button className="add-btn" onClick={addIntervalRow}>
-          + Add interval
+          {t.addInterval}
         </button>
       </section>
 
       <section className="result-section">
-        <h2>End time</h2>
+        <h2>{t.endTime}</h2>
         <div className="end-time-row">
           <div className="end-time">
             {isNaN(endTime) ? (
-              <span className="invalid">Invalid start time</span>
+              <span className="invalid">{t.invalidStartTime}</span>
             ) : (
               endTime.toLocaleString()
             )}
