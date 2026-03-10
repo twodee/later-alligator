@@ -55,6 +55,16 @@ function App() {
 
   const endTime = computeEndTime(startTime, intervals)
 
+  const [copied, setCopied] = useState(false)
+
+  const copyEndTime = useCallback(() => {
+    if (isNaN(endTime)) return
+    navigator.clipboard.writeText(endTime.toLocaleString()).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }, [endTime])
+
   return (
     <div className="app">
       <h1>🐊 Later Alligator</h1>
@@ -111,11 +121,25 @@ function App() {
 
       <section className="result-section">
         <h2>End time</h2>
-        <div className="end-time">
-          {isNaN(endTime) ? (
-            <span className="invalid">Invalid start time</span>
-          ) : (
-            endTime.toLocaleString()
+        <div className="end-time-row">
+          <div className="end-time">
+            {isNaN(endTime) ? (
+              <span className="invalid">Invalid start time</span>
+            ) : (
+              endTime.toLocaleString()
+            )}
+          </div>
+          {!isNaN(endTime) && (
+            <button
+              className="copy-btn"
+              onClick={copyEndTime}
+              aria-label="Copy end time"
+              title="Copy end time"
+            >
+              <span className="material-icons">
+                {copied ? 'check' : 'content_copy'}
+              </span>
+            </button>
           )}
         </div>
       </section>

@@ -139,11 +139,38 @@ input[type="datetime-local"]:focus {
   background: #1b4332;
 }
 
+.end-time-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .end-time {
   font-size: 1.4rem;
   font-weight: 600;
   color: #1b4332;
   padding: 0.5rem 0;
+}
+
+.copy-btn {
+  background: none;
+  border: 1.5px solid #b7d5c4;
+  border-radius: 6px;
+  color: #2d6a4f;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.4rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.copy-btn:hover {
+  background: #f0faf4;
+  border-color: #2d6a4f;
+}
+
+.copy-btn .material-icons {
+  font-size: 1.2rem;
 }
 
 .invalid {
